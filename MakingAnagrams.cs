@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,27 +10,30 @@ namespace MakingAnagrams
     {
         static void Main(string[] args)
         {
-            string a = Console.ReadLine();
-            string b = Console.ReadLine();
-            int[] countsA = new int[26];
-            int[] countsB = new int[26];
-            char presentCharacter;
-            for (int i = 0; i < a.Length; i++)
+            string s1 = "abc";
+            string s2 = "cde";
+            int difference = CalculateAnagramDifference(s1, s2);
+            Console.WriteLine("The number of letters that must be removed is {0}", difference);
+            Console.ReadLine();
+        }
+        static int CalculateAnagramDifference(string s1, string s2)
+        {
+            int count = 0;
+            int[] letters1 = new int[26];
+            int[] letters2 = new int[26];
+            foreach (char c in s1)
             {
-                presentCharacter = a[i];
-                countsA[presentCharacter - 'a']++;
+                letters1[c - 'a']++;
             }
-            for (int j = 0; j < b.Length; j++)
+            foreach (char c in s2)
             {
-                presentCharacter = b[j];
-                countsB[presentCharacter - 'a']++;
+                letters2[c - 'a']++;
             }
-            int difference = 0;
-            for (int k = 0; k < countsA.Length; k++)
+            for (int i = 0; i < letters1.Length; i++)
             {
-                difference += Math.Abs(countsA[k] - countsB[k]);
+                count += Math.Abs(letters1[i] - letters2[i]);
             }
-            Console.WriteLine(difference);
+            return count;
         }
     }
 }
