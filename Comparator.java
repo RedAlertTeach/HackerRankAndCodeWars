@@ -1,46 +1,70 @@
-// Write your Checker class here
-class Checker implements Comparator<Player> {
-    
-    public int compare(Player a, Player b)
+import java.util.*;
+
+class Student implements Comparable<Student> {
+	private int id;
+	private String fname;
+	private double cgpa;
+	public Student(int id, String fname, double cgpa) {
+		super();
+		this.id = id;
+		this.fname = fname;
+		this.cgpa = cgpa;
+	}
+	public int getId() {
+		return id;
+	}
+	public String getFname() {
+		return fname;
+	}
+	public double getCgpa() {
+		return cgpa;
+	}
+    public int compareTo(Student s)
     {
-        if (a.score > b.score) 
-               return -1;
-           else if (a.score < b.score)
-               return 1;
-        else
+        if (cgpa < s.cgpa)
+           return 1;
+        else if (cgpa > s.cgpa)
+           return -1;
+        else // they are equal
         {
-            int value = a.name.compareTo(b.name);
-            return value;
+            if (fname.equals(s.fname))
+                {
+                if (id > s.id)
+                  return 1;
+                  else
+                  return -1;
+                }
+            else 
+               return fname.compareTo(s.fname);
+           
         }
     }
 }
-class Player{
-    String name;
-    int score;
-    
-    Player(String name, int score){
-        this.name = name;
-        this.score = score;
-    }
+
+//Complete the code
+public class Solution
+{
+	public static void main(String[] args){
+		Scanner in = new Scanner(System.in);
+		int testCases = Integer.parseInt(in.nextLine());
+		
+		List<Student> studentList = new ArrayList<Student>();
+		while(testCases>0){
+			int id = in.nextInt();
+			String fname = in.next();
+			double cgpa = in.nextDouble();
+			
+			Student st = new Student(id, fname, cgpa);
+			studentList.add(st);
+			
+			testCases--;
+		}
+        Collections.sort(studentList);
+      	for(Student st: studentList){
+			System.out.println(st.getFname());
+		}
+	}
 }
 
-class Solution {
 
-    public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-        int n = scan.nextInt();
 
-        Player[] player = new Player[n];
-        Checker checker = new Checker();
-        
-        for(int i = 0; i < n; i++){
-            player[i] = new Player(scan.next(), scan.nextInt());
-        }
-        scan.close();
-     
-        Arrays.sort(player, checker);
-        for(int i = 0; i < player.length; i++){
-            System.out.printf("%s %s\n", player[i].name, player[i].score);
-        }
-    }
-}
